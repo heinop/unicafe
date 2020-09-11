@@ -25,9 +25,13 @@ const Result = ({ label, value }) => {
 }
 
 const Statistics = ({good, neutral, bad}) => {
+  const total = good + neutral + bad;
+  if (total === 0) {
+    return (<span>No feedback given</span>)
+  }
 
-  const calculateAverage = () => (good - bad) / (good + neutral + bad);
-  const calculatePositive = () => (good / (good + neutral + bad)) * 100 + '%';
+  const calculateAverage = () => (good - bad) / total;
+  const calculatePositive = () => (good / total) * 100 + '%';
 
   return (
     <>
