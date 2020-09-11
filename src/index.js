@@ -24,14 +24,28 @@ const Result = ({ label, value }) => {
   )
 }
 
+const Statistics = ({good, neutral, bad}) => {
+
+  const calculateAverage = () => (good - bad) / (good + neutral + bad);
+  const calculatePositive = () => (good / (good + neutral + bad)) * 100 + '%';
+
+  return (
+    <>
+      <Result label='good' value={good} />
+      <Result label='neutral' value={neutral} />
+      <Result label='bad' value={bad} />
+      <Result label='all' value={good + neutral + bad} />
+      <Result label='average' value={calculateAverage()} />
+      <Result label='positive' value={calculatePositive()} />
+    </>
+  )
+}
+
 const App = () => {
   // tallenna napit omaan tilaansa
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
-
-  const calculateAverage = () => (good - bad) / (good + neutral + bad);
-  const calculatePositive = () => (good / (good + neutral + bad)) * 100 + '%';
 
   return (
     <div>
@@ -40,12 +54,7 @@ const App = () => {
       <Button handleClick={() => setNeutral(neutral + 1)} text='neutral' />
       <Button handleClick={() => setBad(bad + 1)} text='bad' />
       <Title text='statistics' />
-      <Result label='good' value={good} />
-      <Result label='neutral' value={neutral} />
-      <Result label='bad' value={bad} />
-      <Result label='all' value={good + neutral + bad} />
-      <Result label='average' value={calculateAverage()} />
-      <Result label='positive' value={calculatePositive()} />
+      <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   )
 }
